@@ -8,7 +8,10 @@ import java.util.Scanner;
 public class urinals {
 
     static boolean goodString(String str) {  // checks to see if valid string
-        if(str==null||str.length()==0||str.contains(" ")) return false;
+        if(str==null||str.length()==0||str.length()>=21||str.contains(" ")) return false;
+        for (int i=0; i<str.length()-1;i++){
+            if (str.charAt(i)==1 && str.charAt(i+1)==1) return false;
+        }
         return true;
     }
 
