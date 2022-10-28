@@ -1,5 +1,10 @@
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -67,14 +72,34 @@ public class urinals {
 
     public static void main(String[] args) throws IOException {
         urinals url = new urinals();
-        System.out.println(url.readFile());
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. Enter String manually\n2. Use File as input");
         int choice = scanner.nextInt();
         if(choice==1){
-            System.out.println("1");
+            System.out.println("Enter String of 0s and 1s");
+            String str = scanner.next();
+            if (urinals.goodString(str)){
+                System.out.println("Empty Urinals:"+urinals.countUrinals(str));
+            } else {
+                System.out.println("Invalid Input String!");
+            }
+
         } else {
-            System.out.println("2");
+            StringBuilder stringBuilder = new StringBuilder();
+            String[] str = url.readFile().split(System.lineSeparator());
+            for (String s: str){
+                stringBuilder.append(urinals.countUrinals(s)+ System.lineSeparator());
+            }
+            Path path = Paths.get("resources/rule.txt");
+            try {
+                Files.write(path, Collections.singleton(stringBuilder.toString()),
+                        StandardCharsets.UTF_8);
+                System.out.println("Output Successfully Generated!");
+            }
+            // Catch block to handle the exception
+            catch (IOException ex) {
+                System.out.print("Invalid Path");
+            }
         }
     }
 }
