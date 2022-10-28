@@ -55,4 +55,12 @@ class urinalsTest {
         assertTrue(file.exists());
     }
 
+    @Test
+    @DisplayName("====== Omkar Pisal == Test Case for Non Empty File =======")
+    void emptyFile()  {
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        File file = new File(classLoader.getResource("urinal.dat").getFile());
+        assertTrue(file.length() != 0);
+    }
+
 }
